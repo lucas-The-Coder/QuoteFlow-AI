@@ -1,0 +1,59 @@
+@QuoteFlowAI_HostAddress = http://localhost:5000
+@token = your_jwt_token_here
+
+### Register a new user
+POST {{QuoteFlowAI_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Test123!",
+  "firstName": "John",
+  "lastName": "Doe"
+}
+
+### Login
+POST {{QuoteFlowAI_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Test123!"
+}
+
+### Create a quotation (requires JWT)
+POST {{QuoteFlowAI_HostAddress}}/api/quotes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "quoteNumber": "Q-1001",
+  "customerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "amount": 1250.00,
+  "description": "Security camera installation",
+  "quoteDate": "2026-06-11T00:00:00Z"
+}
+
+### Get all quotations
+GET {{QuoteFlowAI_HostAddress}}/api/quotes
+Authorization: Bearer {{token}}
+
+### Get quotation by ID
+GET {{QuoteFlowAI_HostAddress}}/api/quotes/3fa85f64-5717-4562-b3fc-2c963f66afa6
+Authorization: Bearer {{token}}
+
+### Get dashboard metrics
+GET {{QuoteFlowAI_HostAddress}}/api/dashboard/metrics
+Authorization: Bearer {{token}}
+
+### WhatsApp webhook verification (GET)
+GET {{QuoteFlowAI_HostAddress}}/api/webhooks/whatsapp?hub_mode=subscribe&hub_verify_token=your_verify_token&hub_challenge=123456
+
+### WhatsApp webhook for messages (POST)
+POST {{QuoteFlowAI_HostAddress}}/api/webhooks/whatsapp
+Content-Type: application/json
+
+{
+  "object": "whatsapp_business_account",
+  "entry": []
+}
